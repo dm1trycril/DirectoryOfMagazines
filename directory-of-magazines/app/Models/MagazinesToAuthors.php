@@ -10,5 +10,6 @@ class MagazinesToAuthors extends Model
     protected $table = 'magazines_to_authors';
 
     protected $fillable = ['author_id', 'magazine_id'];
+
     use HasFactory;
 }

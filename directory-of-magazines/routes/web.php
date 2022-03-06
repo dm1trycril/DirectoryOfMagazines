@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthorsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+//Route::get('author/list/{page?}/{perPage?}', [AuthorsController::class, 'list']);
+
+Route::get('author/list', [AuthorsController::class, 'list']);
+
+Route::post('author/add', [AuthorsController::class, 'add']);
+
+Route::post('author/update', [AuthorsController::class, 'update']);
