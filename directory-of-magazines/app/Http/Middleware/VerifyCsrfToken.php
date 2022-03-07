@@ -15,5 +15,11 @@ class VerifyCsrfToken extends Middleware
         'author/list',
         'author/add',
         'author/update',
+        'author/delete',
+
+        'magazine/list',
+        'magazine/add',
+        'magazine/update',
+        'magazine/delete',
     ];
 }

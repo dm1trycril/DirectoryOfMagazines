@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Author;
+use http\Env\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -39,7 +40,7 @@ class AuthorsController extends Controller
         $author = Author::find($request->get('id'));
 
         if($request->filled('name')) {
-            $author->surname = $request->get('name');
+            $author->name = $request->get('name');
         }
         if($request->filled('surname')) {
             $author->surname = $request->get('surname');
@@ -51,5 +52,14 @@ class AuthorsController extends Controller
         $author->save();
 
         return response()->json($author);
+    }
+
+    public function delete(Request $request): JsonResponse
+    {
+        $author = Author::find($request->get('id'));
+
+        $author->delete();
+
+        return response()->json('Delete successfully');
     }
 }

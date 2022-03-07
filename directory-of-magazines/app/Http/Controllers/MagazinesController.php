@@ -3,83 +3,45 @@
 namespace App\Http\Controllers;
 
 use App\Models\Magazine;
+use http\Env\Response;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Psy\Util\Json;
 
 class MagazinesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function list(Request $request): JsonResponse
     {
-        //
+        $page = $request->get('page');
+        $perPage = $request->get('perPage');
+
+        if($page && $perPage)
+        {
+            $magazine = Magazine::offset(($page-1)*$perPage)
+                ->limit($perPage)
+                ->get();
+        }
+        else
+        {
+            $magazine = Magazine::all();
+        }
+
+        return response()->json($magazine);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function add(Request $request): JsonResponse
     {
-        //
+        $magazine = new Magazine($request->all());
+        $magazine->save();
+        return response()->json($magazine);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function delete(Request $request): JsonResponse
     {
-        //
-    }
+        $magazine = Magazine::find($request->get('id'));
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Magazine  $magazine
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Magazine $magazine)
-    {
-        //
-    }
+        $magazine->delete();
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Magazine  $magazine
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Magazine $magazine)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Magazine  $magazine
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Magazine $magazine)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Magazine  $magazine
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Magazine $magazine)
-    {
-        //
+        return response()->json('Delete successfully');
     }
 }

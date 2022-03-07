@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\AsCollection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,7 +13,7 @@ class Magazine extends Model
     protected $fillable = ['name', 'description', 'img_src', 'authors_list', 'release_date'];
 
     protected $casts = [
-        'authors_list' => 'array',
+        'authors_list' => AsCollection::class,
     ];
 
     use HasFactory;

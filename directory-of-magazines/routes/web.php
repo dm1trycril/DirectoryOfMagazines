@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthorsController;
+use App\Http\Controllers\MagazinesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,10 +19,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-//Route::get('author/list/{page?}/{perPage?}', [AuthorsController::class, 'list']);
-
 Route::get('author/list', [AuthorsController::class, 'list']);
-
 Route::post('author/add', [AuthorsController::class, 'add']);
-
 Route::post('author/update', [AuthorsController::class, 'update']);
+Route::post('author/delete', [AuthorsController::class, 'delete']);
+
+Route::get('magazine/list', [MagazinesController::class, 'list']);
+Route::post('magazine/add', [MagazinesController::class, 'add']);
+Route::post('magazine/delete', [MagazinesController::class, 'delete']);
+Route::post('magazine/update', [MagazinesController::class, 'update']);
