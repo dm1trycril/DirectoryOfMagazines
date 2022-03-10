@@ -11,5 +11,15 @@ class Author extends Model
 
     protected $fillable = ['name', 'surname', 'middle_name'];
 
+    public function magazines(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(
+            Magazine::class,
+            'magazines_to_authors',
+            'author_id',
+            'magazine_id'
+        );
+    }
+
     use HasFactory;
 }

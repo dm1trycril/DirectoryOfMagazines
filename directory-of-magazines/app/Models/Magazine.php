@@ -10,11 +10,17 @@ class Magazine extends Model
 {
     protected $table = 'magazines';
 
-    protected $fillable = ['name', 'description', 'img_src', 'authors_list', 'release_date'];
+    protected $fillable = ['name', 'description', 'img_src', 'release_date'];
 
-    protected $casts = [
-        'authors_list' => AsCollection::class,
-    ];
+    public function authors(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(
+            Author::class,
+            'magazines_to_authors',
+            'magazine_id',
+            'author_id'
+        );
+    }
 
     use HasFactory;
 }

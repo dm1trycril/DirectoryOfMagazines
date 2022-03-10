@@ -36,6 +36,38 @@ class MagazinesController extends Controller
         return response()->json($magazine);
     }
 
+//    Default implementation
+
+    public function update(Request $request): JsonResponse
+    {
+        $magazine = Magazine::find($request->get('id'));
+
+        if($request->filled('name'))
+        {
+            $magazine->name = $request->get('name');
+        }
+        if($request->filled('description'))
+        {
+            $magazine->description = $request->get('description');
+        }
+        if($request->filled('img_src'))
+        {
+            $magazine->img_src = $request->get('img_src');
+        }
+        if($request->filled('authors_list'))
+        {
+            $magazine->authors_list = $request->get('authors_list');
+        }
+        if($request->filled('release_date'))
+        {
+            $magazine->release_date = $request->get('release_date');
+        }
+
+        $magazine->save();
+
+        return response()->json($magazine);
+    }
+
     public function delete(Request $request): JsonResponse
     {
         $magazine = Magazine::find($request->get('id'));

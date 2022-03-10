@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             $table->string('img_src');
-            $table->json('authors_list');
             $table->date('release_date');
             $table->timestamps();
         });

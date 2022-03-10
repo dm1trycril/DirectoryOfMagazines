@@ -26,5 +26,5 @@ Route::post('author/delete', [AuthorsController::class, 'delete']);
 
 Route::get('magazine/list', [MagazinesController::class, 'list']);
 Route::post('magazine/add', [MagazinesController::class, 'add']);
-Route::post('magazine/delete', [MagazinesController::class, 'delete']);
 Route::post('magazine/update', [MagazinesController::class, 'update']);
+Route::post('magazine/delete', [MagazinesController::class, 'delete']);
