@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Casts\AsCollection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Magazine extends Model
 {
@@ -12,7 +12,7 @@ class Magazine extends Model
 
     protected $fillable = ['name', 'description', 'img_src', 'release_date'];
 
-    public function authors(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function authors(): BelongsToMany
     {
         return $this->belongsToMany(
             Author::class,

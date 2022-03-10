@@ -28,3 +28,5 @@ Route::get('magazine/list', [MagazinesController::class, 'list']);
 Route::post('magazine/add', [MagazinesController::class, 'add']);
 Route::post('magazine/update', [MagazinesController::class, 'update']);
 Route::post('magazine/delete', [MagazinesController::class, 'delete']);
+
+Route::get('magazine/authors', [MagazinesController::class, 'getAuthors']);

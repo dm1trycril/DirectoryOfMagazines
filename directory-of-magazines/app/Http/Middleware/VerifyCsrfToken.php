@@ -21,5 +21,7 @@ class VerifyCsrfToken extends Middleware
         'magazine/add',
         'magazine/update',
         'magazine/delete',
+
+        'magazine/authors',
     ];
 }

@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Magazine;
-use http\Env\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Psy\Util\Json;
 
 class MagazinesController extends Controller
 {
@@ -76,4 +74,15 @@ class MagazinesController extends Controller
 
         return response()->json('Delete successfully');
     }
+
+    public function getAuthors(Request $request)
+    {
+        $magazine = Magazine::find(1);
+//        foreach ($magazine->authors as $author) {
+//            dd($author);
+//        }
+        $authors = $magazine->authors;
+        return response()->json($authors);
+    }
+
 }
