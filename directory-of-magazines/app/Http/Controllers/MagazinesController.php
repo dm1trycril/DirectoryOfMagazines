@@ -15,22 +15,35 @@ class MagazinesController extends Controller
 
         if($page && $perPage)
         {
-            $magazine = Magazine::offset(($page-1)*$perPage)
+            $magazines = Magazine::offset(($page-1)*$perPage)
                 ->limit($perPage)
                 ->get();
         }
         else
         {
-            $magazine = Magazine::all();
+            $magazines = Magazine::all();
         }
 
-        return response()->json($magazine);
+        foreach($magazines as $magazine)
+        {
+            $magazine->authors;
+        }
+
+        return response()->json($magazines);
     }
 
     public function add(Request $request): JsonResponse
     {
-        $magazine = new Magazine($request->all());
+        $magazine = new Magazine($request->except(['authors']));
+
         $magazine->save();
+
+        $authors = $request->get('authors');
+
+        foreach($authors as $author) {
+            $magazine->authors()->attach($author);
+        }
+
         return response()->json($magazine);
     }
 
@@ -40,28 +53,19 @@ class MagazinesController extends Controller
     {
         $magazine = Magazine::find($request->get('id'));
 
-        if($request->filled('name'))
-        {
-            $magazine->name = $request->get('name');
-        }
-        if($request->filled('description'))
-        {
-            $magazine->description = $request->get('description');
-        }
-        if($request->filled('img_src'))
-        {
-            $magazine->img_src = $request->get('img_src');
-        }
-        if($request->filled('authors_list'))
-        {
-            $magazine->authors_list = $request->get('authors_list');
-        }
-        if($request->filled('release_date'))
-        {
-            $magazine->release_date = $request->get('release_date');
+        foreach (['name', 'description', 'img_src', 'release_date'] as $field) {
+            if($request->filled($field))
+            {
+                $magazine->$field = $request->get($field);
+            }
         }
 
         $magazine->save();
+
+        if($request->filled('authors'))
+        {
+            $magazine->authors()->sync($request->get('authors'));
+        }
 
         return response()->json($magazine);
     }
@@ -70,19 +74,10 @@ class MagazinesController extends Controller
     {
         $magazine = Magazine::find($request->get('id'));
 
+        $magazine->authors()->detach();
+
         $magazine->delete();
 
         return response()->json('Delete successfully');
     }
-
-    public function getAuthors(Request $request)
-    {
-        $magazine = Magazine::find(1);
-//        foreach ($magazine->authors as $author) {
-//            dd($author);
-//        }
-        $authors = $magazine->authors;
-        return response()->json($authors);
-    }
-
 }
